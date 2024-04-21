@@ -3,10 +3,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ideate_ai/config/routes/app_routes.dart';
 import 'package:patterns_canvas/patterns_canvas.dart';
 
-import 'widgets/logo.dart';
+import '../common/logo.dart';
 
 class GetStartedPage extends StatelessWidget {
   const GetStartedPage({super.key});
@@ -411,8 +412,7 @@ class GetStartedPage extends StatelessWidget {
                       tag: 'email',
                       child: ElevatedButton.icon(
                         onPressed: () {
-                          Navigator.of(context).pushNamed(AppRoutes.email);
-                          // TODO: Handle Email Sign In
+                          context.go(AppRoutes.email);
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(

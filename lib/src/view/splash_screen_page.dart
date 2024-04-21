@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ideate_ai/src/view/widgets/logo.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ideate_ai/src/view/auth/get_started_page.dart';
+import 'package:ideate_ai/src/view/common/logo.dart';
 import 'package:patterns_canvas/patterns_canvas.dart';
 
 import '../../config/config.dart';
@@ -18,10 +20,21 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   void initState() {
     super.initState();
     Future.delayed(
-      5.seconds,
-      () {
-        Navigator.of(context).pushReplacementNamed(AppRoutes.getStarted);
-      },
+      3.seconds,
+      () => context.go(AppRoutes.getStarted),
+      // () => Navigator.of(context).pushReplacement(
+      // PageRouteBuilder(
+      //   pageBuilder: (context, animation, secondaryAnimation) =>
+      //       const GetStartedPage(),
+      //   transitionDuration: 0.5.seconds,
+      //   transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      //     return FadeTransition(
+      //       opacity: animation,
+      //       alwaysIncludeSemantics: true,
+      //       child: child,
+      //     );
+      //   },
+      // ),
     );
   }
 
@@ -34,14 +47,14 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
             effects: [
               BlurEffect(
                 duration: 1.seconds,
-                delay: 0.6.seconds,
+                delay: 0.2.seconds,
                 begin: const Offset(3, 3),
                 end: Offset.zero,
                 curve: Curves.easeOut,
               ),
               ScaleEffect(
                 duration: 1.seconds,
-                delay: 0.6.seconds,
+                delay: 0.2.seconds,
                 begin: const Offset(1.5, 1.5),
                 end: const Offset(1, 1),
                 curve: Curves.easeOut,
@@ -56,7 +69,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                     size: 0.3,
                     color: Colors.black.withOpacity(0.05),
                     duration: 4.seconds,
-                    delay: 1.5.seconds,
+                    delay: 1.seconds,
                     curve: Curves.easeInOut,
                     blendMode: BlendMode.multiply,
                   ),
@@ -72,21 +85,21 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
             effects: [
               BlurEffect(
                 duration: 1.seconds,
-                delay: 0.5.seconds,
+                delay: 0.25.seconds,
                 begin: const Offset(2, 2),
                 end: Offset.zero,
                 curve: Curves.easeOut,
               ),
               ScaleEffect(
                 duration: 1.seconds,
-                delay: 0.5.seconds,
+                delay: 0.25.seconds,
                 begin: const Offset(2, 2),
                 end: const Offset(1, 1),
                 curve: Curves.easeOut,
               ),
               SlideEffect(
                 duration: 1.1.seconds,
-                delay: 0.5.seconds,
+                delay: 0.25.seconds,
                 begin: const Offset(-0.5, -0.12),
                 end: const Offset(0, 0),
                 curve: Curves.easeOut,
@@ -120,21 +133,21 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
             effects: [
               BlurEffect(
                 duration: 1.seconds,
-                delay: 0.3.seconds,
+                delay: 0.15.seconds,
                 begin: const Offset(5, 5),
                 end: Offset.zero,
                 curve: Curves.easeOut,
               ),
               ScaleEffect(
                 duration: 1.seconds,
-                delay: 0.3.seconds,
+                delay: 0.15.seconds,
                 begin: const Offset(1.75, 1.75),
                 end: const Offset(1, 1),
                 curve: Curves.easeOut,
               ),
               SlideEffect(
                 duration: 1.1.seconds,
-                delay: 0.3.seconds,
+                delay: 0.15.seconds,
                 begin: const Offset(0.25, -0.1),
                 end: const Offset(0, 0),
                 curve: Curves.easeOut,
@@ -165,21 +178,21 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
             effects: [
               BlurEffect(
                 duration: 1.seconds,
-                delay: 0.4.seconds,
+                delay: 0.2.seconds,
                 begin: const Offset(7, 7),
                 end: Offset.zero,
                 curve: Curves.easeOut,
               ),
               ScaleEffect(
                 duration: 1.seconds,
-                delay: 0.4.seconds,
+                delay: 0.2.seconds,
                 begin: const Offset(1.5, 1.5),
                 end: const Offset(1, 1),
                 curve: Curves.easeOut,
               ),
               SlideEffect(
                 duration: 1.1.seconds,
-                delay: 0.4.seconds,
+                delay: 0.2.seconds,
                 begin: const Offset(-0.3, 0.4),
                 end: const Offset(0, 0),
                 curve: Curves.easeOut,
@@ -215,13 +228,13 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
               effects: [
                 FadeEffect(
                   duration: 1.2.seconds,
-                  delay: 1.seconds,
+                  delay: 0.5.seconds,
                   begin: 0.0,
                   end: 1.0,
                 ),
                 ScaleEffect(
                   duration: 1.2.seconds,
-                  delay: 1.seconds,
+                  delay: 0.5.seconds,
                   begin: const Offset(0.8, 0.8),
                   end: const Offset(1, 1),
                 ),
@@ -255,7 +268,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
               effects: [
                 FadeEffect(
                   duration: 1.5.seconds,
-                  delay: 1.7.seconds,
+                  delay: 1.seconds,
                   curve: Curves.easeOut,
                 ),
                 SlideEffect(

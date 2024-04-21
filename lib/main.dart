@@ -12,13 +12,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'IdeateAI',
       theme: lightTheme,
-      darkTheme: darkTheme,
-      initialRoute: AppRoutes.loading,
-      routes: AppRouter().router,
+      routerConfig: AppRouter().router,
     );
   }
 }

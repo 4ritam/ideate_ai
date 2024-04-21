@@ -1,20 +1,44 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ideate_ai/config/config.dart';
 import 'package:patterns_canvas/patterns_canvas.dart';
 
-import 'widgets/logo.dart';
+import '../common/logo.dart';
 
-class EmailPage extends StatefulWidget {
-  const EmailPage({super.key});
+class EmailSubmitPage extends StatefulWidget {
+  const EmailSubmitPage({super.key});
 
   @override
-  State<EmailPage> createState() => _EmailPageState();
+  State<EmailSubmitPage> createState() => _EmailSubmitPageState();
 }
 
-class _EmailPageState extends State<EmailPage> {
+class _EmailSubmitPageState extends State<EmailSubmitPage> {
   final emailFormKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+
+  bool processing = false;
+
+  void submitHandler() {
+    if (emailFormKey.currentState!.validate()) {
+      setState(() {
+        processing = true;
+      });
+      Future.delayed(3.seconds, () {
+        context.go(
+          AppRoutes.login,
+          extra: emailController.text,
+        );
+      }).then((value) {
+        setState(() {
+          processing = false;
+        });
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -268,71 +292,79 @@ class _EmailPageState extends State<EmailPage> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              TextFormField(
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      fontSize: 12,
-                                    ),
-                                decoration: InputDecoration(
-                                  hintText: 'Email',
-                                  hintStyle: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                        color: Colors.grey[600],
-                                        fontSize: 11,
+                              Material(
+                                child: Hero(
+                                  tag: 'email-field',
+                                  child: TextFormField(
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                          fontSize: 14,
+                                        ),
+                                    decoration: InputDecoration(
+                                      hintText: 'Email',
+                                      hintStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            color: Colors.grey[600],
+                                            fontSize: 14,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                        ),
                                       ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(
-                                      color: Theme.of(context)
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: BorderSide(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .tertiary,
+                                        ),
+                                      ),
+                                      focusColor: Theme.of(context)
                                           .colorScheme
                                           .tertiary,
+                                      hoverColor: Theme.of(context)
+                                          .colorScheme
+                                          .tertiary,
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                        horizontal: 20,
+                                        vertical: 16,
+                                      ),
                                     ),
-                                  ),
-                                  focusColor:
-                                      Theme.of(context).colorScheme.tertiary,
-                                  hoverColor:
-                                      Theme.of(context).colorScheme.tertiary,
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 20,
-                                    vertical: 16,
+                                    keyboardType: TextInputType.emailAddress,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter your email';
+                                      }
+                                      if (!value.contains('@')) {
+                                        return 'Please enter a valid email';
+                                      }
+                                      if (RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                                              .hasMatch(value) ==
+                                          false) {
+                                        return 'Please enter a valid email';
+                                      }
+                                      return null;
+                                    },
                                   ),
                                 ),
-                                keyboardType: TextInputType.emailAddress,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your email';
-                                  }
-                                  if (!value.contains('@')) {
-                                    return 'Please enter a valid email';
-                                  }
-                                  if (RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                                          .hasMatch(value) ==
-                                      false) {
-                                    return 'Please enter a valid email';
-                                  }
-                                  return null;
-                                },
                               ),
                               const SizedBox(height: 16),
                               Hero(
                                 tag: 'email',
                                 child: ElevatedButton(
-                                  onPressed: () {
-                                    // TODO: Handle Email Login
-                                  },
+                                  onPressed: processing ? null : submitHandler,
                                   style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
@@ -352,30 +384,33 @@ class _EmailPageState extends State<EmailPage> {
                                     padding: const EdgeInsets.symmetric(
                                       vertical: 14.0,
                                     ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Text("Continue   "),
-                                        Animate(
-                                          onPlay: (controller) =>
-                                              controller.repeat(reverse: true),
-                                          effects: [
-                                            SlideEffect(
-                                              duration: 1.seconds,
-                                              begin: const Offset(0, 0),
-                                              end: const Offset(0.75, 0),
-                                              curve: Curves.easeInOutCirc,
-                                            )
-                                          ],
-                                          child: const Icon(
-                                            Icons.arrow_forward,
-                                            size: 20,
+                                    child: processing
+                                        ? const CupertinoActivityIndicator()
+                                        : Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              const Text("Continue   "),
+                                              Animate(
+                                                onPlay: (controller) =>
+                                                    controller.repeat(
+                                                        reverse: true),
+                                                effects: [
+                                                  SlideEffect(
+                                                    duration: 1.seconds,
+                                                    begin: const Offset(0, 0),
+                                                    end: const Offset(0.75, 0),
+                                                    curve: Curves.easeInOutCirc,
+                                                  )
+                                                ],
+                                                child: const Icon(
+                                                  Icons.arrow_forward,
+                                                  size: 20,
+                                                ),
+                                              )
+                                            ],
                                           ),
-                                        )
-                                      ],
-                                    ),
                                   ),
                                 ),
                               ),
