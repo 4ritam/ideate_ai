@@ -28,7 +28,7 @@ class _EmailSubmitPageState extends State<EmailSubmitPage> {
         processing = true;
       });
       Future.delayed(3.seconds, () {
-        context.go(
+        context.goNamed(
           AppRoutes.login,
           extra: emailController.text,
         );
@@ -292,9 +292,12 @@ class _EmailSubmitPageState extends State<EmailSubmitPage> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Material(
-                                child: Hero(
-                                  tag: 'email-field',
+                              Hero(
+                                tag: 'email-field',
+                                child: Material(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                   child: TextFormField(
                                     style: Theme.of(context)
                                         .textTheme
@@ -342,6 +345,7 @@ class _EmailSubmitPageState extends State<EmailSubmitPage> {
                                         vertical: 16,
                                       ),
                                     ),
+                                    controller: emailController,
                                     keyboardType: TextInputType.emailAddress,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {

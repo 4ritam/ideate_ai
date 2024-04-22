@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ideate_ai/src/view/auth/email_login_page.dart';
 import 'package:ideate_ai/src/view/auth/email_submit_page.dart';
@@ -13,31 +12,25 @@ class AppRouter {
     routes: [
       GoRoute(
         path: AppRoutes.loading,
+        name: AppRoutes.loading,
         builder: (context, state) => const SplashScreenPage(),
       ),
       GoRoute(
         path: AppRoutes.getStarted,
+        name: AppRoutes.getStarted,
         builder: (context, state) => const GetStartedPage(),
         routes: [
           GoRoute(
             path: AppRoutes.email,
-            pageBuilder: (context, state) {
-              return MaterialPage(
-                child: const EmailSubmitPage(),
-                key: state.pageKey,
-              );
-            },
+            name: AppRoutes.email,
+            builder: (context, state) => const EmailSubmitPage(),
           ),
           GoRoute(
             path: AppRoutes.login,
-            pageBuilder: (context, state) {
-              return MaterialPage(
-                child: EmailLoginPage(
-                  email: state.extra as String,
-                ),
-                key: state.pageKey,
-              );
-            },
+            name: AppRoutes.login,
+            builder: (context, state) => EmailLoginPage(
+              email: state.extra as String? ?? '',
+            ),
           ),
         ],
       ),

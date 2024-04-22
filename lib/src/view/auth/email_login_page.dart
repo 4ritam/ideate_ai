@@ -27,12 +27,20 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
       setState(() {
         processing = true;
       });
-      Future.delayed(3.seconds, () {}).then((value) {
+      Future.delayed(3.seconds, () {
+        
+      }).then((value) {
         setState(() {
           processing = false;
         });
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    emailController.text = widget.email;
   }
 
   @override
@@ -287,9 +295,12 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Material(
-                                child: Hero(
-                                  tag: 'email-field',
+                              Hero(
+                                tag: 'email-field',
+                                child: Material(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                   child: TextFormField(
                                     style: Theme.of(context)
                                         .textTheme
@@ -300,6 +311,7 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
                                               .primary,
                                           fontSize: 14,
                                         ),
+                                    controller: emailController,
                                     enabled: false,
                                     decoration: InputDecoration(
                                       hintText: 'Email',
@@ -357,61 +369,69 @@ class _EmailLoginPageState extends State<EmailLoginPage> {
                                 ),
                               ),
                               const SizedBox(height: 16),
-                              TextFormField(
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      fontSize: 14,
-                                    ),
-                                enabled: false,
-                                decoration: InputDecoration(
-                                  hintText: 'Password',
-                                  hintStyle: Theme.of(context)
+                              Material(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: TextFormField(
+                                  style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium
                                       ?.copyWith(
-                                        color: Colors.grey[600],
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                         fontSize: 14,
                                       ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                  enabled: true,
+                                  controller: passwordController,
+                                  decoration: InputDecoration(
+                                    hintText: 'Password',
+                                    hintStyle: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                          color: Colors.grey[600],
+                                          fontSize: 14,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      borderSide: BorderSide(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiary,
+                                      ),
+                                    ),
+                                    focusColor:
+                                        Theme.of(context).colorScheme.tertiary,
+                                    hoverColor:
+                                        Theme.of(context).colorScheme.tertiary,
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 20,
+                                      vertical: 16,
                                     ),
                                   ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .tertiary,
-                                    ),
-                                  ),
-                                  focusColor:
-                                      Theme.of(context).colorScheme.tertiary,
-                                  hoverColor:
-                                      Theme.of(context).colorScheme.tertiary,
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 20,
-                                    vertical: 16,
-                                  ),
-                                ),
-                                keyboardType: TextInputType.visiblePassword,
-                                obscureText: true,
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Please enter your password';
-                                  }
-                                  if (value.length < 8) {
-                                    return 'Password must be at least 8 characters';
-                                  }
+                                  keyboardType: TextInputType.visiblePassword,
+                                  obscureText: true,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your password';
+                                    }
+                                    if (value.length < 8) {
+                                      return 'Password must be at least 8 characters';
+                                    }
 
-                                  return null;
-                                },
+                                    return null;
+                                  },
+                                ),
                               ),
                               const SizedBox(height: 16),
                               Hero(

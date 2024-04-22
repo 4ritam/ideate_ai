@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:ideate_ai/src/view/auth/get_started_page.dart';
 import 'package:ideate_ai/src/view/common/logo.dart';
 import 'package:patterns_canvas/patterns_canvas.dart';
 
@@ -22,19 +21,6 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
     Future.delayed(
       3.seconds,
       () => context.go(AppRoutes.getStarted),
-      // () => Navigator.of(context).pushReplacement(
-      // PageRouteBuilder(
-      //   pageBuilder: (context, animation, secondaryAnimation) =>
-      //       const GetStartedPage(),
-      //   transitionDuration: 0.5.seconds,
-      //   transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      //     return FadeTransition(
-      //       opacity: animation,
-      //       alwaysIncludeSemantics: true,
-      //       child: child,
-      //     );
-      //   },
-      // ),
     );
   }
 

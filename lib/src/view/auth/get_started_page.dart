@@ -412,7 +412,7 @@ class GetStartedPage extends StatelessWidget {
                       tag: 'email',
                       child: ElevatedButton.icon(
                         onPressed: () {
-                          context.go(AppRoutes.email);
+                          context.goNamed(AppRoutes.email);
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
