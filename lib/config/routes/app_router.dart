@@ -7,7 +7,7 @@ import 'package:ideate_ai/src/view/splash_screen_page.dart';
 import 'app_routes.dart';
 
 class AppRouter {
-  final router = GoRouter(
+  static final router = GoRouter(
     initialLocation: AppRoutes.loading,
     routes: [
       GoRoute(
